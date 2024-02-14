@@ -4,29 +4,36 @@ using UnityEngine;
 
 public class SpawnPrefab : MonoBehaviour
 {
+    //minions spawn
     public GameObject myPrefab;
+    //add folder
+    public Transform minions; 
     private bool isSpawning;
+    private Camera cam; //camera reference
+
 
     void Start()
     {
-        isSpawning = false;
+        isSpawning = true;
+        cam = Camera.main;
     }
-    
-    public void spawn()
-    {
-        Debug.Log("clicked");
-        if (isSpawning == false)
+
+    public void spawn() {
+
+        Debug.Log("instiante");
+
+        Vector2 mousePos= cam.ScreenToWorldPoint(Input.mousePosition);
+
+        if (Input.GetMouseButtonDown(0))
         {
-            isSpawning = true;
+            Instantiate(myPrefab, mousePos, Quaternion.identity, minions.transform);
         }
+        
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isSpawning)
-        {
-            Instantiate(myPrefab, Input.mousePosition, Quaternion.identity);
-            isSpawning = false;
-        }
+
+        if (isSpawning) { spawn(); }
     }
 }
